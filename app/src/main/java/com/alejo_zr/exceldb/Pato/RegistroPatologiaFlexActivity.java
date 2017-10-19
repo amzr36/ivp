@@ -62,8 +62,9 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
     private String idFotoFlex,campoSeveridad;
 
     private MaterialSpinner spinnerPatoFlex,spinnerSeveridadPatoFlexRegistro;
-    private TextView tv_nombre_carretera_patologia,tv_id_segmento_patologia_flex,tv_foto_danio,tv_idFotoFlex;
-    private TextInputLayout input_campoAbscisaFlex,input_campoCarrilPato,input_campoDanioPato,input_campoLargoDanio,input_campoAnchoDanio;
+    private TextView tv_nombre_carretera_patologia,tv_id_segmento_patologia_flex,tv_foto_danio,tv_idFotoFlex,tv_foto_nombre;
+    private TextInputLayout input_campoAbscisaFlex,input_campoCarrilPato,input_campoDanioPato,input_campoLargoDanio,input_campoAnchoDanio,input_campoSeveridad,
+            input_campoidFotoFlex;
     private EditText campoCarrilPato, campoDanioPato, campoLargoDanio, campoAnchoDanio, campoLargoRepa, campoAnchoRepa, campoAclaracion,campoAbscisaFlex,
             campoLatitudPatoFlex,campoLongitudPatoFlex;
     private String[] tipoDanio = {"Seleccione el tipo de Daño", "Fisuras longitudinales y transversales", "Fisura longitudinal en junta de construcción",
@@ -77,24 +78,25 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_patologia_flex);
 
+        botonCargar= (ImageButton) findViewById(R.id.btnDanio);
         if(validaPermisos()){
             botonCargar.setEnabled(true);
         }else{
             botonCargar.setEnabled(false);
         }
         imagen= (ImageView) findViewById(R.id.imagemId);
-        botonCargar= (ImageButton) findViewById(R.id.btnDanio);
+
         btnRegistrarPatologia= (Button) findViewById(R.id.btnRegistroPatologia);
 
         spinnerSeveridadPatoFlexRegistro = (MaterialSpinner) findViewById(R.id.spinnerSeveridadPatoFlexRegistro);
         spinnerPatoFlex = (MaterialSpinner) findViewById(R.id.spinnerPatoFlex);
-        campoCarrilPato = (EditText) findViewById(R.id.campoCarrilPato);
-        campoDanioPato = (EditText) findViewById(R.id.campoDanioPato);
-        campoLargoDanio = (EditText) findViewById(R.id.campoLargoDanio);
-        campoAnchoDanio = (EditText) findViewById(R.id.campoAnchoDanio);
-        campoLargoRepa = (EditText) findViewById(R.id.campoLargoRepa);
-        campoAnchoRepa = (EditText) findViewById(R.id.campoAnchoRepa);
-        campoAclaracion = (EditText) findViewById(R.id.campoAclaraciones);
+        campoCarrilPato = (EditText) findViewById(R.id.campoCarrilPatoFlex);
+        campoDanioPato = (EditText) findViewById(R.id.campoDanioPatoFlex);
+        campoLargoDanio = (EditText) findViewById(R.id.campoLargoDanioFlex);
+        campoAnchoDanio = (EditText) findViewById(R.id.campoAnchoDanioFlex);
+        campoLargoRepa = (EditText) findViewById(R.id.campoLargoRepaFlex);
+        campoAnchoRepa = (EditText) findViewById(R.id.campoAnchoRepaFlex);
+        campoAclaracion = (EditText) findViewById(R.id.campoAclaracionesFlex);
         campoAbscisaFlex = (EditText) findViewById(R.id.campoAbscisaFlex);
         campoLatitudPatoFlex = (EditText) findViewById(R.id.campoLatitudPatoFlex);
         campoLongitudPatoFlex = (EditText) findViewById(R.id.campolongitudPatoFlex);
@@ -102,8 +104,14 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
         tv_id_segmento_patologia_flex = (TextView) findViewById(R.id.tv_id_segmento_patologia_flex_registro);
         tv_foto_danio = (TextView) findViewById(R.id.tv_foto_danio);
         tv_idFotoFlex = (TextView) findViewById(R.id.tv_idFotoFlex);
-
-
+        tv_foto_nombre = (TextView) findViewById(R.id.tv_foto_nombre);
+        input_campoAbscisaFlex = (TextInputLayout) findViewById(R.id.input_campoAbscisaFlex);
+        input_campoCarrilPato = (TextInputLayout) findViewById(R.id.input_campoCarrilPatoFlex);
+        input_campoDanioPato = (TextInputLayout) findViewById(R.id.input_campoDanioPatoFlex);
+        input_campoLargoDanio = (TextInputLayout) findViewById(R.id.input_campoLargoDanioFlex);
+        input_campoAnchoDanio = (TextInputLayout) findViewById(R.id.input_campoAnchoDanioFlex);
+        input_campoSeveridad = (TextInputLayout) findViewById(R.id.input_campoSeveridadFlex);
+        input_campoidFotoFlex = (TextInputLayout) findViewById(R.id.input_campoidFotoFlex);
 
         Bundle bundle = getIntent().getExtras();
         String dato_nom_carretera = bundle.getString("nom_carretera_segmento");
@@ -135,6 +143,9 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
                             break;
                         case 3:
                             campoSeveridad="N.A";
+                            break;
+                        default:
+                            campoSeveridad="";
                             break;
                     }
                 }
@@ -249,8 +260,7 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
         switch (view.getId()){
 
             case R.id.btnRegistroPatologia:
-                Toast.makeText(getApplicationContext(),"Se registro el Daño: "+campoDanioPato.getText().toString(),Toast.LENGTH_SHORT).show();
-                registrarPatoFlex();
+                verificarDatosPatoFlex();
                 break;
             case R.id.btnDanio:
                 guardarFotografia();
@@ -263,25 +273,72 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
 
     }
 
+    private void verificarDatosPatoFlex() {
+        boolean isValid = true;
+        if(campoAbscisaFlex.getText().toString().trim().isEmpty()){
+            input_campoAbscisaFlex.setError("Ingrese la abscisa");
+            isValid=false;
+        }else{
+            input_campoAbscisaFlex.setErrorEnabled(false);
+        }
+        if(campoCarrilPato.getText().toString().trim().isEmpty()){
+            input_campoCarrilPato.setError("Ingrese el caril");
+            isValid=false;
+        }else{
+            input_campoCarrilPato.setErrorEnabled(false);
+        }
+        if(campoDanioPato.getText().toString().trim().isEmpty()){
+            input_campoDanioPato.setError("Seleccion el daño");
+            isValid=false;
+        }else{
+            input_campoDanioPato.setErrorEnabled(false);
+        }
+        if(campoSeveridad.trim().isEmpty()){
+            input_campoSeveridad.setError("Ingrese la severidad");
+            isValid=false;
+        }else{
+            input_campoSeveridad.setErrorEnabled(false);
+        }
+        if(campoLargoDanio.getText().toString().trim().isEmpty()){
+            input_campoLargoDanio.setError("Ingrese el largo del daño");
+            isValid=false;
+        }else{
+            input_campoLargoDanio.setErrorEnabled(false);
+        }
+        if(tv_idFotoFlex.getText().toString().trim().isEmpty()){
+            input_campoidFotoFlex.setError("Tome la foto del daño");
+            isValid=false;
+        }else{
+            input_campoidFotoFlex.setErrorEnabled(false);
+        }
+
+        if(isValid){
+            registrarPatoFlex();
+        }
+
+    }
+
     private void registrarPatoFlex() {
 
         BaseDatos bd=new BaseDatos(this);
 
         SQLiteDatabase db=bd.getWritableDatabase();
 
-
         String insert="INSERT INTO "+ Utilidades.PATOLOGIAFLEX.TABLA_PATOLOGIA
                 +" ( " +Utilidades.PATOLOGIAFLEX.CAMPO_NOMBRE_CARRETERA_PATOLOGIA+","+Utilidades.PATOLOGIAFLEX.CAMPO_ID_SEGMENTO_PATOLOGIA+","+
                 Utilidades.PATOLOGIAFLEX.CAMPO_ABSCISA_PATOLOGIA+","+Utilidades.PATOLOGIAFLEX.CAMPO_LATITUD+","+Utilidades.PATOLOGIAFLEX.CAMPO_LONGITUD+","
                 +Utilidades.PATOLOGIAFLEX.CAMPO_CARRIL_PATOLOGIA+","+Utilidades.PATOLOGIAFLEX.CAMPO_DANIO_PATOLOGIA+","+Utilidades.PATOLOGIAFLEX.CAMPO_SEVERIDAD+","
                 +Utilidades.PATOLOGIAFLEX.CAMPO_LARGO_PATOLOGIA+","+Utilidades.PATOLOGIAFLEX.CAMPO_ANCHO_PATOLOGIA+","+Utilidades.PATOLOGIAFLEX.CAMPO_LARGO_REPARACION
-                +"," +Utilidades.PATOLOGIAFLEX.CAMPO_ANCHO_REPARACION+","+Utilidades.PATOLOGIAFLEX.CAMPO_ACLARACIONES+","+Utilidades.PATOLOGIAFLEX.CAMPO_FOTO_DANIO+")" +
+                +"," +Utilidades.PATOLOGIAFLEX.CAMPO_ANCHO_REPARACION+","+Utilidades.PATOLOGIAFLEX.CAMPO_ACLARACIONES+","+Utilidades.PATOLOGIAFLEX.CAMPO_NOMBRE_FOTO+","
+                +Utilidades.PATOLOGIAFLEX.CAMPO_FOTO_DANIO+")" +
                 " VALUES ('"+tv_nombre_carretera_patologia.getText().toString()+"' , '"+tv_id_segmento_patologia_flex.getText().toString()+"' , '"+
                 campoAbscisaFlex.getText().toString()+"' , '"+campoLatitudPatoFlex.getText().toString()+"' , '"+campoLongitudPatoFlex.getText().toString()+"' , '"
                 +campoCarrilPato.getText().toString()+"' , '"+campoDanioPato.getText().toString()+"' , '"+campoSeveridad+"' , '"
                 +campoLargoDanio.getText().toString()+"' , '"+campoAnchoDanio.getText().toString()+"' , '"+campoLargoRepa.getText().toString()+"' , '"
-                +campoAnchoRepa.getText().toString()+"' , '"+campoAclaracion.getText().toString()+"' , '"+tv_foto_danio.getText().toString()+"')";
+                +campoAnchoRepa.getText().toString()+"' , '"+campoAclaracion.getText().toString()+"' , '"+tv_foto_nombre.getText().toString()+"' , '"
+                +tv_foto_danio.getText().toString()+"')";
 
+        Toast.makeText(getApplicationContext(),"Se registro el Daño: "+campoDanioPato.getText().toString(),Toast.LENGTH_SHORT).show();
         db.execSQL(insert);
 
         db.close();
@@ -355,7 +412,7 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
             nombreImagen=("Carretera_"+tv_nombre_carretera_patologia.getText().toString()+"_Segmento_"+tv_id_segmento_patologia_flex.getText().toString()+"_Foto_"+tv_idFotoFlex.getText().toString()+".png");
         }
 
-
+        tv_foto_nombre.setText(nombreImagen);
         path=Environment.getExternalStorageDirectory()+
                 File.separator+RUTA_IMAGEN+File.separator+nombreImagen;
 

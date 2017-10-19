@@ -12,11 +12,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ej_registro_carretera"
+            android:textSize="@dimen/titulo"
+            android:textStyle="bold"/>
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHighlight="@color/colorAccent"
+            android:layout_marginTop="@dimen/marginTopTV"
             >
             <EditText
                 android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.alejo_zr.exceldb.Segmento.Flexible;
 
 import android.app.DatePickerDialog;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -13,18 +14,23 @@ import android.widget.Toast;
 
 import com.alejo_zr.exceldb.BaseDatos;
 import com.alejo_zr.exceldb.R;
+import com.alejo_zr.exceldb.entidades.SegmentoFlex;
 import com.alejo_zr.exceldb.utilidades.Utilidades;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class RegistroSegmentoFlexActivity extends AppCompatActivity {
 
-
+    private BaseDatos baseDatos;
+    private ArrayList<SegmentoFlex> listaSegmentosF;
     private EditText campoNCalzadas, campoNCarriles, campoAnchoCarril, campoAnchoBerma, campoPRI, campoPRF, campoComentarios,campoFecha;
     private TextView tvNombre_Carretera_SegmentoFlex;
     private TextInputLayout input_camponCalzadas,input_campoNCarriles,input_campoAnchoCarril,input_campoAnchoBerma,input_campoPRI;
+    private String id_seg_flex;
+    private Integer id_segmento;
 
     private  int dia, mes, ano;
 
@@ -34,7 +40,7 @@ public class RegistroSegmentoFlexActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_segmento_flex);
 
-
+        baseDatos = new BaseDatos(this);
         campoNCalzadas = (EditText) findViewById(R.id.campoNCalzadasFlex);
         campoNCarriles = (EditText) findViewById(R.id.campoNCarrilesFlex);
         campoAnchoCarril = (EditText) findViewById(R.id.campoAnchoCarrilFlex);
@@ -60,6 +66,7 @@ public class RegistroSegmentoFlexActivity extends AppCompatActivity {
         tvNombre_Carretera_SegmentoFlex.setText(dato_nom);
         
         fechaActual();
+        cargarSegmentosFlex();
 
 
     }
@@ -139,9 +146,50 @@ public class RegistroSegmentoFlexActivity extends AppCompatActivity {
             input_campoPRI.setErrorEnabled(false);
         }
 
-
         if(isValid){
+            idSegmento();
             registrarSegmento();
+        }
+    }
+
+    private void idSegmento() {
+        Cursor cursor1 = baseDatos.getSegmentoFlex();
+        if (cursor1.moveToNext()) {
+
+            do {
+                id_segmento = Integer.parseInt(cursor1.getString(cursor1.getColumnIndex(Utilidades.SEGMENTOFLEX.CAMPO_ID_SEGMENTO)));
+            }while(cursor1.moveToNext());
+        }else{
+            id_segmento=0;
+        }
+        id_segmento = id_segmento+1;
+        id_seg_flex=(id_segmento+"");
+    }
+
+    private void cargarSegmentosFlex() {
+
+        SQLiteDatabase db=baseDatos.getReadableDatabase();
+
+        SegmentoFlex segmento=null;
+        listaSegmentosF= new ArrayList<SegmentoFlex>();
+        //select * from carretera
+        Cursor cursor=db.rawQuery("SELECT * FROM "+ Utilidades.SEGMENTOFLEX.TABLA_SEGMENTO,null);
+
+        while(cursor.moveToNext()){
+            segmento = new SegmentoFlex();
+
+            segmento.setId_segmento(cursor.getInt(0));
+            segmento.setNombre_carretera(cursor.getString(1));
+            segmento.setnCalzadas(cursor.getString(2));
+            segmento.setnCarriles(cursor.getString(3));
+            segmento.setAnchoCarril(cursor.getString(4));
+            segmento.setAnchoBerma(cursor.getString(5));
+            segmento.setPri(cursor.getString(6));
+            segmento.setPrf(cursor.getString(7));
+            segmento.setComentarios(cursor.getString(8));
+            segmento.setFecha(cursor.getString(9));
+
+            listaSegmentosF.add(segmento);
         }
     }
 
@@ -152,16 +200,16 @@ public class RegistroSegmentoFlexActivity extends AppCompatActivity {
         SQLiteDatabase db=bd.getWritableDatabase();
 
         String insert="INSERT INTO "+ Utilidades.SEGMENTOFLEX.TABLA_SEGMENTO
-                +" ( "+Utilidades.SEGMENTOFLEX.CAMPO_NOMBRE_CARRETERA_SEGMENTO+","+Utilidades.SEGMENTOFLEX.CAMPO_CALZADAS_SEGMENTO+","
+                +" ( "+Utilidades.SEGMENTOFLEX.CAMPO_ID_SEGMENTO+","+Utilidades.SEGMENTOFLEX.CAMPO_NOMBRE_CARRETERA_SEGMENTO+","+Utilidades.SEGMENTOFLEX.CAMPO_CALZADAS_SEGMENTO+","
                 +Utilidades.SEGMENTOFLEX.CAMPO_CARRILES_SEGMENTO+","+Utilidades.SEGMENTOFLEX.CAMPO_ANCHO_CARRIL+","+Utilidades.SEGMENTOFLEX.CAMPO_ANCHO_BERMA+","+Utilidades.SEGMENTOFLEX.CAMPO_PRI_SEGMENTO+","
                 +Utilidades.SEGMENTOFLEX.CAMPO_PRF_SEGMENTO+","+Utilidades.SEGMENTOFLEX.CAMPO_COMENTARIOS+","+Utilidades.SEGMENTOFLEX.CAMPO_FECHA+")" +
-                " VALUES ('"+tvNombre_Carretera_SegmentoFlex.getText().toString()+"' , '"
+                " VALUES ('"+id_seg_flex.toString()+"' , '"+tvNombre_Carretera_SegmentoFlex.getText().toString()+"' , '"
                 +campoNCalzadas.getText().toString()+"' , '"+campoNCarriles.getText().toString()+"' , '"+campoAnchoCarril.getText().toString()+"' , '"
                 +campoAnchoBerma.getText().toString()+"' , '"+campoPRI.getText().toString()+"' , '"+campoPRF.getText().toString()+"' , '"
                 +campoComentarios.getText().toString()+"' , '"+campoFecha.getText().toString()+"')";
 
         db.execSQL(insert);
-        Toast.makeText(getApplicationContext(),R.string.regisSeg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),R.string.segRegis,Toast.LENGTH_SHORT).show();
 
         db.close();
 

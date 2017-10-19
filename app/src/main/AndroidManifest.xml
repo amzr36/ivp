@@ -74,9 +74,7 @@
             android:name=".Segmento.Rigido.EditarSegmentoRigiActivity"
             android:label="@string/editarSegmento"
             android:parentActivityName=".Segmento.Rigido.SegmentoRigiActivity" />
-        <activity
-            android:name=".Carretera.ConsulCarreteraActivity"
-            android:label="@string/consul" />
+
         <activity
             android:name=".Pato.RegistroPatologiaFlexActivity"
             android:label="@string/patoFlex"
@@ -97,17 +95,8 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity
-            android:name=".CarreteraScrollActivity"
-            android:label="@string/title_activity_carretera_scroll"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".Carretera.CarreteraRegistroEjemploActivity"></activity>
+        <activity android:name=".Carretera.CarreteraRegistroEjemploActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

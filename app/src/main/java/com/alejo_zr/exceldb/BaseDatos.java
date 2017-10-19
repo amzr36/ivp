@@ -53,14 +53,20 @@ public class BaseDatos extends SQLiteOpenHelper {
         return res;
     }
 
-    public Cursor getSegmento() {
+    public Cursor getSegmentoFlex() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from " + Utilidades.SEGMENTOFLEX.TABLA_SEGMENTO + " ",
                 null);
         return res;
     }
+    public Cursor getSegmentoRigi() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from " + Utilidades.SEGMENTORIGI.TABLA_SEGMENTO + " ",
+                null);
+        return res;
+    }
 
-    public Cursor getPato() {
+    public Cursor getPatoFlex() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from " + Utilidades.PATOLOGIAFLEX.TABLA_PATOLOGIA + " ",
                 null);

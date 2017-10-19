@@ -1,5 +1,6 @@
 package com.alejo_zr.exceldb.Carretera;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -115,53 +116,58 @@ public class CarreteraActivity extends AppCompatActivity {
         eliminarSegFlex();
         eliminarSegRigi();
         eliminarDañosFlex();
-        
+
+
         Intent intent = new Intent(CarreteraActivity.this,ConsultarCarreteraActivity.class);
         startActivity(intent);
+        idCarretera();
         db.close();
     }
 
     private void eliminarDañosFlex() {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-        String[] parametrosDF={tvNomCarretera.getText().toString()};
+
         for (int i=0; i<listaPatologiasFlex.size();i++){
             boolean IdCarretera = tvNomCarretera.getText().toString().equals(listaPatologiasFlex.get(i).getNombre_carretera_patoFlex());
 
             if(IdCarretera==true){
-                String[] parametros={tvNomCarretera.getText().toString()};
+                String[] parametrosDF={tvNomCarretera.getText().toString()};
                 db.delete(Utilidades.PATOLOGIAFLEX.TABLA_PATOLOGIA,Utilidades.PATOLOGIAFLEX.CAMPO_NOMBRE_CARRETERA_PATOLOGIA+"=?",parametrosDF);
-
             }
-
         }
+        idPatoFlex();
 
     }
 
     private void eliminarSegRigi() {
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-        String[] parametrosSR={tvNomCarretera.getText().toString()};
+
         for (int i=0; i<listaSegmentosR.size();i++){
             boolean IdCarretera = tvNomCarretera.getText().toString().equals(listaSegmentosR.get(i).getNombre_carretera());
 
             if(IdCarretera==true){
-                String[] parametros={tvNomCarretera.getText().toString()};
-                db.delete(Utilidades.SEGMENTORIGI.TABLA_SEGMENTO,Utilidades.SEGMENTORIGI.CAMPO_NOMBRE_CARRETERA_SEGMENTO+"=?",parametros);
+                String[] parametrosSR={tvNomCarretera.getText().toString()};
+                db.delete(Utilidades.SEGMENTORIGI.TABLA_SEGMENTO,Utilidades.SEGMENTORIGI.CAMPO_NOMBRE_CARRETERA_SEGMENTO+"=?",parametrosSR);
             }
         }
+        idSegRigi();
     }
 
     private void eliminarSegFlex() {
 
         SQLiteDatabase db = baseDatos.getWritableDatabase();
-        String[] parametrosSF={tvNomCarretera.getText().toString()};
+
         for (int i=0; i<listaSegmentosF.size();i++){
             boolean IdCarretera = tvNomCarretera.getText().toString().equals(listaSegmentosF.get(i).getNombre_carretera());
 
             if(IdCarretera==true){
-                String[] parametros={tvNomCarretera.getText().toString()};
-                db.delete(Utilidades.SEGMENTOFLEX.TABLA_SEGMENTO,Utilidades.SEGMENTOFLEX.CAMPO_NOMBRE_CARRETERA_SEGMENTO+"=?",parametros);
+                String[] parametrosSF={tvNomCarretera.getText().toString()};
+                db.delete(Utilidades.SEGMENTOFLEX.TABLA_SEGMENTO,Utilidades.SEGMENTOFLEX.CAMPO_NOMBRE_CARRETERA_SEGMENTO+"=?",parametrosSF);
             }
         }
+        idSegFlex();
+
+
     }
 
     private void cargarDañosFlex() {
@@ -244,4 +250,43 @@ public class CarreteraActivity extends AppCompatActivity {
             listaSegmentosF.add(segmento);
         }
     }
+
+
+    private void idPatoFlex() {
+    }
+
+    private void idSegRigi() {
+    }
+
+    private void idSegFlex() {
+
+        SQLiteDatabase db = baseDatos.getWritableDatabase();
+        int id=1;
+        for (int i=0; i<listaSegmentosF.size();i++) {
+
+            int idSegmento = listaSegmentosF.get(i).getId_segmento();
+            int modulo = idSegmento / id;
+            Toast.makeText(getApplicationContext(), "Modulo" + modulo, Toast.LENGTH_SHORT).show();
+            if (modulo != 1) {
+                Toast.makeText(getApplicationContext(), "Id " + id + "idS" + idSegmento + "M" + modulo, Toast.LENGTH_SHORT).show();
+                String segmentoId;
+                segmentoId = ("" + id);
+                String[] parametrosSG = {segmentoId};
+                ContentValues values = new ContentValues();
+                values.put(Utilidades.SEGMENTOFLEX.CAMPO_ID_SEGMENTO, segmentoId);
+                db.update(Utilidades.SEGMENTOFLEX.TABLA_SEGMENTO, values, Utilidades.SEGMENTOFLEX.CAMPO_ID_SEGMENTO + "=?", parametrosSG);
+                id = id + 1;
+            }
+        }
+
+
+
+    }
+
+    private void idCarretera() {
+
+
+    }
+
+
 }

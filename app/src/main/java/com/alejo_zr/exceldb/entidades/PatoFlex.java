@@ -22,10 +22,11 @@ public class PatoFlex implements Serializable {
     private String largoRepa;
     private String anchoRepa;
     private String aclaraciones;
+    private String nombreFoto;
     private String foto;
 
     public PatoFlex(Integer id_patoFlex, String nombre_carretera_patoFlex, String id_segmento_patoFlex, String abscisa, String latitud, String longitud, String carril,
-                    String danio, String severidad, String largoDanio, String anchoDanio, String largoRepa, String anchoRepa, String aclaraciones, String foto) {
+                    String danio, String severidad, String largoDanio, String anchoDanio, String largoRepa, String anchoRepa, String aclaraciones, String nombreFoto, String foto) {
         this.id_patoFlex = id_patoFlex;
         this.nombre_carretera_patoFlex = nombre_carretera_patoFlex;
         this.id_segmento_patoFlex = id_segmento_patoFlex;
@@ -40,6 +41,7 @@ public class PatoFlex implements Serializable {
         this.largoRepa = largoRepa;
         this.anchoRepa = anchoRepa;
         this.aclaraciones = aclaraciones;
+        this.nombreFoto = nombreFoto;
         this.foto = foto;
     }
 
@@ -157,6 +159,14 @@ public class PatoFlex implements Serializable {
 
     public void setAclaraciones(String aclaraciones) {
         this.aclaraciones = aclaraciones;
+    }
+
+    public String getNombreFoto() {
+        return nombreFoto;
+    }
+
+    public void setNombreFoto(String nombreFoto) {
+        this.nombreFoto = nombreFoto;
     }
 
     public String getFoto() {
