@@ -63,7 +63,7 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
 
     private MaterialSpinner spinnerPatoFlex,spinnerSeveridadPatoFlexRegistro;
     private TextView tv_nombre_carretera_patologia,tv_id_segmento_patologia_flex,tv_foto_danio,tv_idFotoFlex;
-    private TextInputLayout input_campoAbscisaFlex;
+    private TextInputLayout input_campoAbscisaFlex,input_campoCarrilPato,input_campoDanioPato,input_campoLargoDanio,input_campoAnchoDanio;
     private EditText campoCarrilPato, campoDanioPato, campoLargoDanio, campoAnchoDanio, campoLargoRepa, campoAnchoRepa, campoAclaracion,campoAbscisaFlex,
             campoLatitudPatoFlex,campoLongitudPatoFlex;
     private String[] tipoDanio = {"Seleccione el tipo de Daño", "Fisuras longitudinales y transversales", "Fisura longitudinal en junta de construcción",
@@ -77,16 +77,15 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_patologia_flex);
 
-        imagen= (ImageView) findViewById(R.id.imagemId);
-        botonCargar= (ImageButton) findViewById(R.id.btnDanio);
-        btnRegistrarPatologia= (Button) findViewById(R.id.btnRegistroPatologia);
-
-
         if(validaPermisos()){
             botonCargar.setEnabled(true);
         }else{
             botonCargar.setEnabled(false);
         }
+        imagen= (ImageView) findViewById(R.id.imagemId);
+        botonCargar= (ImageButton) findViewById(R.id.btnDanio);
+        btnRegistrarPatologia= (Button) findViewById(R.id.btnRegistroPatologia);
+
         spinnerSeveridadPatoFlexRegistro = (MaterialSpinner) findViewById(R.id.spinnerSeveridadPatoFlexRegistro);
         spinnerPatoFlex = (MaterialSpinner) findViewById(R.id.spinnerPatoFlex);
         campoCarrilPato = (EditText) findViewById(R.id.campoCarrilPato);
@@ -103,6 +102,8 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
         tv_id_segmento_patologia_flex = (TextView) findViewById(R.id.tv_id_segmento_patologia_flex_registro);
         tv_foto_danio = (TextView) findViewById(R.id.tv_foto_danio);
         tv_idFotoFlex = (TextView) findViewById(R.id.tv_idFotoFlex);
+
+
 
         Bundle bundle = getIntent().getExtras();
         String dato_nom_carretera = bundle.getString("nom_carretera_segmento");

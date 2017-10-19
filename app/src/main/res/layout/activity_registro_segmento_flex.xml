@@ -64,7 +64,8 @@
                     android:id="@+id/input_camponCalzadasFlex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:textColorHighlight="@color/colorAccent">
                     <EditText
                         android:id="@+id/campoNCalzadasFlex"
                         android:layout_width="match_parent"
@@ -78,7 +79,8 @@
                     android:id="@+id/input_campoNCarrilesFlex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:textColorHighlight="@color/colorAccent">
                     <EditText
                         android:id="@+id/campoNCarrilesFlex"
                         android:layout_width="match_parent"
@@ -106,7 +108,8 @@
                     android:id="@+id/input_campoAnchoCarrilFlex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:textColorHighlight="@color/colorAccent">
                     <EditText
                         android:id="@+id/campoAnchoCarrilFlex"
                         android:layout_width="match_parent"
@@ -120,7 +123,8 @@
                     android:id="@+id/input_campoAnchoBermaFlex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:textColorHighlight="@color/colorAccent">
                     <EditText
                         android:id="@+id/campoAnchoBermaFlex"
                         android:layout_width="match_parent"
@@ -151,7 +155,8 @@
                     android:id="@+id/input_campoPRIFlex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:textColorHighlight="@color/colorAccent">
                     <EditText
                         android:id="@+id/campoPRIFlex"
                         android:layout_width="match_parent"
@@ -163,7 +168,8 @@
                     android:id="@+id/input_campoPRFFlex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:textColorHighlight="@color/colorAccent">
                     <EditText
                         android:id="@+id/campoPRFFlex"
                         android:layout_width="match_parent"
@@ -179,7 +185,8 @@
                 android:id="@+id/input_campoComentariosFlex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:textColorHighlight="@color/colorAccent">
                 <EditText
                     android:id="@+id/campoComentariosFlex"
                     android:layout_width="match_parent"

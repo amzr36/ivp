@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.alejo_zr.exceldb.BaseDatos;
-import com.alejo_zr.exceldb.CarreteraRegistroEjemploActivity;
 import com.alejo_zr.exceldb.R;
 import com.alejo_zr.exceldb.utilidades.Utilidades;
 
