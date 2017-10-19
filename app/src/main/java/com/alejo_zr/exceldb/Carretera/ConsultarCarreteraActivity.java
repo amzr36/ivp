@@ -1,5 +1,6 @@
 package com.alejo_zr.exceldb.Carretera;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,10 +10,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.alejo_zr.exceldb.BaseDatos;
 import com.alejo_zr.exceldb.R;
 import com.alejo_zr.exceldb.entidades.Carretera;
+import com.alejo_zr.exceldb.entidades.SegmentoFlex;
 import com.alejo_zr.exceldb.utilidades.Utilidades;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public class ConsultarCarreteraActivity extends AppCompatActivity {
     private ListView listViewCarreteras;
     private ArrayList<String> listaInformacion;
     private ArrayList<Carretera> listaCarreteras;
+    private ArrayList<SegmentoFlex> listaSegmentosF;
 
     BaseDatos baseDatos;
 
@@ -36,7 +40,8 @@ public class ConsultarCarreteraActivity extends AppCompatActivity {
 
         listViewCarreteras= (ListView) findViewById(R.id.listViewCarretera);
 
-        consultarListaPersonas();
+        consultarListaCarreteras();
+        cargarSegmentosFlex();
 
         ArrayAdapter adaptador=new ArrayAdapter(this,android.R.layout.simple_list_item_1,listaInformacion);
         listViewCarreteras.setAdapter(adaptador);
@@ -67,7 +72,7 @@ public class ConsultarCarreteraActivity extends AppCompatActivity {
 
         listViewCarreteras= (ListView) findViewById(R.id.listViewCarretera);
 
-        consultarListaPersonas();
+        consultarListaCarreteras();
 
         ArrayAdapter adaptador=new ArrayAdapter(this,android.R.layout.simple_list_item_1,listaInformacion);
         listViewCarreteras.setAdapter(adaptador);
@@ -91,7 +96,7 @@ public class ConsultarCarreteraActivity extends AppCompatActivity {
         });
     }
 
-    private void consultarListaPersonas() {
+    private void consultarListaCarreteras() {
         SQLiteDatabase db=baseDatos.getReadableDatabase();
 
         Carretera carretera=null;
@@ -111,6 +116,58 @@ public class ConsultarCarreteraActivity extends AppCompatActivity {
             listaCarreteras.add(carretera);
         }
         obtenerLista();
+    }
+
+    private void cargarSegmentosFlex() {
+
+        SQLiteDatabase db=baseDatos.getReadableDatabase();
+
+        SegmentoFlex segmento=null;
+        listaSegmentosF= new ArrayList<SegmentoFlex>();
+        //select * from carretera
+        Cursor cursor=db.rawQuery("SELECT * FROM "+ Utilidades.SEGMENTOFLEX.TABLA_SEGMENTO,null);
+
+
+        while(cursor.moveToNext()){
+            segmento = new SegmentoFlex();
+
+            segmento.setId_segmento(cursor.getInt(0));
+            segmento.setNombre_carretera(cursor.getString(1));
+            segmento.setnCalzadas(cursor.getString(2));
+            segmento.setnCarriles(cursor.getString(3));
+            segmento.setAnchoCarril(cursor.getString(4));
+            segmento.setAnchoBerma(cursor.getString(5));
+            segmento.setPri(cursor.getString(6));
+            segmento.setPrf(cursor.getString(7));
+            segmento.setComentarios(cursor.getString(8));
+            segmento.setFecha(cursor.getString(9));
+
+            listaSegmentosF.add(segmento);
+        }
+        editarIdSegFlex();
+    }
+
+    private void editarIdSegFlex() {
+
+        SQLiteDatabase db = baseDatos.getWritableDatabase();
+        int id=1;
+        for (int i=0; i<listaSegmentosF.size();i++) {
+
+            int idSegmento = listaSegmentosF.get(i).getId_segmento();
+            int modulo = idSegmento / id;
+            Toast.makeText(getApplicationContext(), "Id " + id + "idS" + idSegmento + "M" + modulo, Toast.LENGTH_SHORT).show();
+            if (modulo != 1) {
+                Toast.makeText(getApplicationContext(), "Entra If", Toast.LENGTH_SHORT).show();
+                String segmentoId;
+                segmentoId = ("" + id);
+                Toast.makeText(getApplicationContext(), "segId " + segmentoId, Toast.LENGTH_SHORT).show();
+                String[] parametrosSF = {segmentoId};
+                ContentValues values = new ContentValues();
+                values.put(Utilidades.SEGMENTOFLEX.CAMPO_ID_SEGMENTO, segmentoId.toString());
+                db.update(Utilidades.SEGMENTOFLEX.TABLA_SEGMENTO, values, Utilidades.SEGMENTOFLEX.CAMPO_ID_SEGMENTO + "=?", parametrosSF);
+                id = id + 1;
+            }
+        }
     }
 
     private void obtenerLista() {

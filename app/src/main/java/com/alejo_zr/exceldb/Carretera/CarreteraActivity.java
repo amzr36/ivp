@@ -1,6 +1,5 @@
 package com.alejo_zr.exceldb.Carretera;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -165,7 +164,7 @@ public class CarreteraActivity extends AppCompatActivity {
                 db.delete(Utilidades.SEGMENTOFLEX.TABLA_SEGMENTO,Utilidades.SEGMENTOFLEX.CAMPO_NOMBRE_CARRETERA_SEGMENTO+"=?",parametrosSF);
             }
         }
-        idSegFlex();
+        //idSegFlex();
 
 
     }
@@ -257,7 +256,7 @@ public class CarreteraActivity extends AppCompatActivity {
 
     private void idSegRigi() {
     }
-
+/*
     private void idSegFlex() {
 
         SQLiteDatabase db = baseDatos.getWritableDatabase();
@@ -281,7 +280,8 @@ public class CarreteraActivity extends AppCompatActivity {
 
 
 
-    }
+
+    }*/
 
     private void idCarretera() {
 
