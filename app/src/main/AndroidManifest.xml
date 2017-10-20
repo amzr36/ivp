@@ -74,7 +74,6 @@
             android:name=".Segmento.Rigido.EditarSegmentoRigiActivity"
             android:label="@string/editarSegmento"
             android:parentActivityName=".Segmento.Rigido.SegmentoRigiActivity" />
-
         <activity
             android:name=".Pato.RegistroPatologiaFlexActivity"
             android:label="@string/patoFlex"
@@ -95,8 +94,11 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".Carretera.CarreteraRegistroEjemploActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Carretera.CarreteraRegistroEjemploActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Segmento.Flexible.RegistroSegmentoFlexEjemploActivity" />
+        <activity android:name=".Pato.RegistroPatologiaFlexEjemploActivity"></activity>
     </application>
 
 </manifest>

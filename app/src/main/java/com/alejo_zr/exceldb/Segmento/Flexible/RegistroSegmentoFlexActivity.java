@@ -1,6 +1,7 @@
 package com.alejo_zr.exceldb.Segmento.Flexible;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ public class RegistroSegmentoFlexActivity extends AppCompatActivity {
     private BaseDatos baseDatos;
     private ArrayList<SegmentoFlex> listaSegmentosF;
     private EditText campoNCalzadas, campoNCarriles, campoAnchoCarril, campoAnchoBerma, campoPRI, campoPRF, campoComentarios,campoFecha;
-    private TextView tvNombre_Carretera_SegmentoFlex;
+    private TextView tvNombre_Carretera_SegmentoFlex,ej_Segmento_Flex;
     private TextInputLayout input_camponCalzadas,input_campoNCarriles,input_campoAnchoCarril,input_campoAnchoBerma,input_campoPRI;
     private String id_seg_flex;
     private Integer id_segmento;
@@ -49,6 +50,8 @@ public class RegistroSegmentoFlexActivity extends AppCompatActivity {
         campoPRF = (EditText) findViewById(R.id.campoPRFFlex);
         campoComentarios = (EditText) findViewById(R.id.campoComentariosFlex);
         campoFecha = (EditText) findViewById(R.id.campoFechaSegmentoFlexRegistro);
+
+        ej_Segmento_Flex = (TextView) findViewById(R.id.ej_Segmento_Flex);
 
 
 
@@ -93,6 +96,9 @@ public class RegistroSegmentoFlexActivity extends AppCompatActivity {
             case R.id.btnFecha:
                 obtenerFecha();
                 break;
+            case R.id.ej_Segmento_Flex:
+                Intent intent = new Intent(RegistroSegmentoFlexActivity.this,RegistroSegmentoFlexEjemploActivity.class);
+                startActivity(intent);
         }
 
 

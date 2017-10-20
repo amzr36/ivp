@@ -62,7 +62,7 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
     private String idFotoFlex,campoSeveridad;
 
     private MaterialSpinner spinnerPatoFlex,spinnerSeveridadPatoFlexRegistro;
-    private TextView tv_nombre_carretera_patologia,tv_id_segmento_patologia_flex,tv_foto_danio,tv_idFotoFlex,tv_foto_nombre;
+    private TextView tv_nombre_carretera_patologia,tv_id_segmento_patologia_flex,tv_foto_danio,tv_idFotoFlex,tv_foto_nombre,ej_Pato_Flex;
     private TextInputLayout input_campoAbscisaFlex,input_campoCarrilPato,input_campoDanioPato,input_campoLargoDanio,input_campoAnchoDanio,input_campoSeveridad,
             input_campoidFotoFlex;
     private EditText campoCarrilPato, campoDanioPato, campoLargoDanio, campoAnchoDanio, campoLargoRepa, campoAnchoRepa, campoAclaracion,campoAbscisaFlex,
@@ -105,6 +105,7 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
         tv_foto_danio = (TextView) findViewById(R.id.tv_foto_danio);
         tv_idFotoFlex = (TextView) findViewById(R.id.tv_idFotoFlex);
         tv_foto_nombre = (TextView) findViewById(R.id.tv_foto_nombre);
+            ej_Pato_Flex = (TextView) findViewById(R.id.ej_Pato_Flex);
         input_campoAbscisaFlex = (TextInputLayout) findViewById(R.id.input_campoAbscisaFlex);
         input_campoCarrilPato = (TextInputLayout) findViewById(R.id.input_campoCarrilPatoFlex);
         input_campoDanioPato = (TextInputLayout) findViewById(R.id.input_campoDanioPatoFlex);
@@ -268,6 +269,10 @@ public class RegistroPatologiaFlexActivity extends AppCompatActivity {
                 break;
             case R.id.btnObtenerCoordenadasPatoFlex:
                 obtenerCoordenadas();
+                break;
+            case R.id.ej_Pato_Flex:
+                Intent intent = new Intent(RegistroPatologiaFlexActivity.this, RegistroPatologiaFlexEjemploActivity.class);
+                startActivity(intent);
                 break;
         }
 

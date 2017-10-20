@@ -78,9 +78,8 @@ public class MainActivity extends AppCompatActivity {
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }
-        Toast.makeText(getApplicationContext(),"ANTES DEL TRY",Toast.LENGTH_SHORT).show();
         try {
-            //Toast.makeText(getApplicationContext(),"ENTRA AL TRY",Toast.LENGTH_SHORT).show();
+
             //file path
             File file = new File(directory, csvFile);
             WorkbookSettings wbSettings = new WorkbookSettings();
@@ -92,9 +91,11 @@ public class MainActivity extends AppCompatActivity {
             WritableSheet sheet1 = workbook.createSheet("Segmento Flexible", 1);
             WritableSheet sheet2 = workbook.createSheet("Segmento Rigido", 2);
             WritableSheet sheet3 = workbook.createSheet("Pato. Flexible", 3);
+            WritableSheet sheet4 = workbook.createSheet("Pato. Rigído",4);
 
 
             //Hoja Carreteras
+                                //FF/CC
             sheet.addCell(new Label(0, 0, "ID"));
             sheet.addCell(new Label(1, 0, "Nom. Carretera")); // column and row
             sheet.addCell(new Label(2, 0, "Cod. Carretera"));
@@ -219,36 +220,85 @@ public class MainActivity extends AppCompatActivity {
                     int ilsR = isR + 1;
 
                     //Campos Segmento Rigi
-                    String id_seg_rigi = cursor1.getString(cursor1.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_ID_SEGMENTO));
-                    String id_seg_rigi_car = cursor1.getString(cursor1.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_NOMBRE_CARRETERA_SEGMENTO));
-                    String nCalzadas_rigi = cursor1.getString(cursor1.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_CALZADAS_SEGMENTO));
-                    String nCarriles_rigi = cursor1.getString(cursor1.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_CARRILES_SEGMENTO));
-                    String espesorLosa_rigi = cursor1.getString(cursor1.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_ESPESOR_LOSA));
-                    String anchoBerma_rigi = cursor1.getString(cursor1.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_ANCHO_BERMA));
-                    String pri_rigi = cursor1.getString(cursor1.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_PRI_SEGMENTO));
-                    String prf_rigi = cursor1.getString(cursor1.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_PRF_SEGMENTO));
-                    String comentarios_rigi = cursor1.getString(cursor1.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_COMENTARIOS));
-                    String fecha_rigi = cursor1.getString(cursor1.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_FECHA));
+                    String id_seg_rigi = cursor2.getString(cursor2.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_ID_SEGMENTO));
+                    String id_seg_rigi_car = cursor2.getString(cursor2.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_NOMBRE_CARRETERA_SEGMENTO));
+                    String nCalzadas_rigi = cursor2.getString(cursor2.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_CALZADAS_SEGMENTO));
+                    String nCarriles_rigi = cursor2.getString(cursor2.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_CARRILES_SEGMENTO));
+                    String espesorLosa_rigi = cursor2.getString(cursor2.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_ESPESOR_LOSA));
+                    String anchoBerma_rigi = cursor2.getString(cursor2.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_ANCHO_BERMA));
+                    String pri_rigi = cursor2.getString(cursor2.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_PRI_SEGMENTO));
+                    String prf_rigi = cursor2.getString(cursor2.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_PRF_SEGMENTO));
+                    String comentarios_rigi = cursor2.getString(cursor2.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_COMENTARIOS));
+                    String fecha_rigi = cursor2.getString(cursor2.getColumnIndex(Utilidades.SEGMENTORIGI.CAMPO_FECHA));
 
-                    boolean nomCarretera = id_seg_rigi.equals("");
-                    if(nomCarretera==false) {
+                    //boolean nomCarretera = id_seg_rigi.equals("");
+                    //if(nomCarretera==false) {
 
-                        //Se Llenan las casillas Segmento Flex
-                        sheet1.addCell(new Label(0, ilsR, id_seg_rigi));
-                        sheet1.addCell(new Label(1, ilsR, id_seg_rigi_car));
-                        sheet1.addCell(new Label(2, ilsR, nCalzadas_rigi));
-                        sheet1.addCell(new Label(3, ilsR, nCarriles_rigi));
-                        sheet1.addCell(new Label(4, ilsR, espesorLosa_rigi));
-                        sheet1.addCell(new Label(5, ilsR, anchoBerma_rigi));
-                        sheet1.addCell(new Label(6, ilsR, pri_rigi));
-                        sheet1.addCell(new Label(7, ilsR, prf_rigi));
-                        sheet1.addCell(new Label(8, ilsR, comentarios_rigi));
-                        sheet1.addCell(new Label(9, ilsR, fecha_rigi));
-                    }
+                    //Se Llenan las casillas Segmento Rigi
+                    sheet2.addCell(new Label(0, ilsR, id_seg_rigi));
+                    sheet2.addCell(new Label(1, ilsR, id_seg_rigi_car));
+                    sheet2.addCell(new Label(2, ilsR, nCalzadas_rigi));
+                    sheet2.addCell(new Label(3, ilsR, nCarriles_rigi));
+                    sheet2.addCell(new Label(4, ilsR, espesorLosa_rigi));
+                    sheet2.addCell(new Label(5, ilsR, anchoBerma_rigi));
+                    sheet2.addCell(new Label(6, ilsR, pri_rigi));
+                    sheet2.addCell(new Label(7, ilsR, prf_rigi));
+                    sheet2.addCell(new Label(8, ilsR, comentarios_rigi));
+                    sheet2.addCell(new Label(9, ilsR, fecha_rigi));
+                //}
 
 
                 }while (cursor2.moveToNext());
             }
+
+            if (cursor3.moveToNext()) {
+
+                do {
+
+                    int iPF = cursor3.getPosition();
+                    int ilPF = iPF + 1;
+
+                    String id_pato_flex = cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_ID_PATOLOGIA));
+                    String id_segmento_flex = cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_ID_SEGMENTO_PATOLOGIA));
+                    String nom_carretera_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_NOMBRE_CARRETERA_PATOLOGIA));
+                    String abscisa_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_ABSCISA_PATOLOGIA));
+                    String latitud_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_LATITUD));
+                    String longitu_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_LONGITUD));
+                    String carril_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_CARRIL_PATOLOGIA));
+                    String danio_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_DANIO_PATOLOGIA));
+                    String severidad_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_SEVERIDAD));
+                    String largodanio_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_LARGO_PATOLOGIA));
+                    String anchodanio_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_ANCHO_PATOLOGIA));
+                    String largorepa_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_LARGO_REPARACION));
+                    String anchorepa_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_ANCHO_REPARACION));
+                    String aclaraciones_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_ACLARACIONES));
+                    String nombrefoto_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_NOMBRE_FOTO));
+                    String tododanio_flex= cursor3.getString(cursor3.getColumnIndex(Utilidades.PATOLOGIAFLEX.CAMPO_FOTO_DANIO));
+
+
+                    sheet3.addCell(new Label(0, ilPF, id_pato_flex));
+                    sheet3.addCell(new Label(1, ilPF, id_segmento_flex));
+                    sheet3.addCell(new Label(2, ilPF, nom_carretera_flex));
+                    sheet3.addCell(new Label(3, ilPF, abscisa_flex));
+                    sheet3.addCell(new Label(4, ilPF, latitud_flex));
+                    sheet3.addCell(new Label(5, ilPF, longitu_flex));
+                    sheet3.addCell(new Label(6, ilPF, carril_flex));
+                    sheet3.addCell(new Label(7, ilPF, danio_flex));
+                    sheet3.addCell(new Label(8, ilPF, severidad_flex));
+                    sheet3.addCell(new Label(9, ilPF, largodanio_flex));
+                    sheet3.addCell(new Label(10, ilPF, anchodanio_flex));
+                    sheet3.addCell(new Label(11, ilPF, largorepa_flex));
+                    sheet3.addCell(new Label(12, ilPF, anchorepa_flex));
+                    sheet3.addCell(new Label(13, ilPF, aclaraciones_flex));
+                    sheet3.addCell(new Label(14, ilPF, nombrefoto_flex));
+                    sheet3.addCell(new Label(15, ilPF, tododanio_flex));
+
+                    Toast.makeText(getApplicationContext(),"id Pato"+id_pato_flex,Toast.LENGTH_SHORT).show();
+
+
+                }while(cursor3.moveToNext());
+            }
+
 
             //closing cursor
             cursor.close();
@@ -259,7 +309,6 @@ public class MainActivity extends AppCompatActivity {
             workbook.close();
             //Toast.makeText(getApplicationContext(),"ANTES TOAST EXCEL",Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplication(), "Data Exported in a Excel Sheet", Toast.LENGTH_SHORT).show();
-
 
         } catch (Exception e) {
             e.printStackTrace();
